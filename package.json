@@ -1,0 +1,24 @@
+{
+  "name": "focus-zone",
+  "version": "1.0.0",
+  "description": "A simple focus website with ambient sounds and a clock to help you work productively",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build step required'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "focus",
+    "productivity",
+    "ambient-sounds",
+    "work",
+    "concentration",
+    "clock"
+  ],
+  "author": "Focus Zone",
+  "license": "MIT",
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  }
+}
