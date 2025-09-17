@@ -1,6 +1,11 @@
-# Focus Zone - Listen While You Work
+# 🎯 Focus Zone - Listen While You Work
+
+[![Live Website](https://img.shields.io/badge/Live-Website-brightgreen?style=for-the-badge)](https://listenwhileyouwork-994fu3h0g-linhs-projects-e35fe93f.vercel.app)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 
 A simple, elegant website designed to help you focus while working. Features a real-time clock and adjustable ambient sounds to create the perfect work environment.
+
+**🌐 Live Site:** https://listenwhileyouwork-994fu3h0g-linhs-projects-e35fe93f.vercel.app
 
 ## Features
 
