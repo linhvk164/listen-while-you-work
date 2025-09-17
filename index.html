@@ -100,6 +100,43 @@
             </div>
         </div>
 
+        <div class="background-section">
+            <h2>Background</h2>
+            <div class="background-controls">
+                <div class="background-options">
+                    <div class="background-option active" data-background="gradient">
+                        <div class="background-preview gradient-preview"></div>
+                        <span>Gradient</span>
+                    </div>
+                    <div class="background-option" data-background="forest">
+                        <div class="background-preview" style="background-image: url('assets/backgrounds/forest.jpg')"></div>
+                        <span>Forest</span>
+                    </div>
+                    <div class="background-option" data-background="mountains">
+                        <div class="background-preview" style="background-image: url('assets/backgrounds/mountains.jpg')"></div>
+                        <span>Mountains</span>
+                    </div>
+                    <div class="background-option" data-background="ocean">
+                        <div class="background-preview" style="background-image: url('assets/backgrounds/ocean.jpg')"></div>
+                        <span>Ocean</span>
+                    </div>
+                    <div class="background-option" data-background="workspace">
+                        <div class="background-preview" style="background-image: url('assets/backgrounds/workspace.jpg')"></div>
+                        <span>Workspace</span>
+                    </div>
+                    <div class="background-option" data-background="night">
+                        <div class="background-preview" style="background-image: url('assets/backgrounds/night.jpg')"></div>
+                        <span>Night Sky</span>
+                    </div>
+                </div>
+                <div class="background-opacity">
+                    <label for="backgroundOpacity">Background Opacity:</label>
+                    <input type="range" id="backgroundOpacity" min="20" max="100" value="100">
+                    <span id="backgroundOpacityValue">100%</span>
+                </div>
+            </div>
+        </div>
+
         <div class="master-controls">
             <button id="stopAll" class="stop-all-btn">Stop All Sounds</button>
             <div class="master-volume">

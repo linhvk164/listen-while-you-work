@@ -254,11 +254,124 @@ class SoundManager {
     }
 }
 
-// Initialize the sound manager when the page loads
+// Background management
+class BackgroundManager {
+    constructor() {
+        this.currentBackground = 'gradient';
+        this.opacity = 1;
+        this.setupEventListeners();
+        this.loadSavedSettings();
+    }
+
+    setupEventListeners() {
+        // Background selection
+        document.querySelectorAll('.background-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                const backgroundType = e.currentTarget.dataset.background;
+                this.setBackground(backgroundType);
+            });
+        });
+
+        // Background opacity
+        const opacitySlider = document.getElementById('backgroundOpacity');
+        opacitySlider.addEventListener('input', (e) => {
+            this.setOpacity(e.target.value / 100);
+            document.getElementById('backgroundOpacityValue').textContent = e.target.value + '%';
+        });
+    }
+
+    setBackground(backgroundType) {
+        // Remove active class from all options
+        document.querySelectorAll('.background-option').forEach(option => {
+            option.classList.remove('active');
+        });
+
+        // Add active class to selected option
+        document.querySelector(`[data-background="${backgroundType}"]`).classList.add('active');
+
+        this.currentBackground = backgroundType;
+
+        if (backgroundType === 'gradient') {
+            // Use original gradient
+            document.body.classList.remove('has-background');
+            document.body.style.setProperty('--bg-opacity', this.opacity);
+        } else {
+            // Use background image
+            document.body.classList.add('has-background');
+            const imageUrl = `assets/backgrounds/${backgroundType}.jpg`;
+            document.body.style.setProperty('--background-image', `url('${imageUrl}')`);
+            this.updateBackgroundImage();
+        }
+
+        this.saveSettings();
+    }
+
+    updateBackgroundImage() {
+        const beforeElement = document.body;
+        beforeElement.style.setProperty('--bg-opacity', this.opacity);
+        
+        // Update the ::before pseudo-element background
+        const style = document.createElement('style');
+        style.textContent = `
+            body::before {
+                background-image: var(--background-image);
+                opacity: var(--bg-opacity);
+            }
+        `;
+        
+        // Remove any existing dynamic styles
+        const existingStyle = document.querySelector('#dynamic-bg-style');
+        if (existingStyle) {
+            existingStyle.remove();
+        }
+        
+        style.id = 'dynamic-bg-style';
+        document.head.appendChild(style);
+    }
+
+    setOpacity(opacity) {
+        this.opacity = opacity;
+        document.body.style.setProperty('--bg-opacity', opacity);
+        
+        if (this.currentBackground !== 'gradient') {
+            this.updateBackgroundImage();
+        } else {
+            // For gradient, adjust the body opacity
+            document.body.style.opacity = opacity;
+        }
+        
+        this.saveSettings();
+    }
+
+    saveSettings() {
+        const settings = {
+            background: this.currentBackground,
+            opacity: this.opacity
+        };
+        localStorage.setItem('focusZoneBackgroundSettings', JSON.stringify(settings));
+    }
+
+    loadSavedSettings() {
+        const saved = localStorage.getItem('focusZoneBackgroundSettings');
+        if (saved) {
+            const settings = JSON.parse(saved);
+            this.setBackground(settings.background);
+            this.setOpacity(settings.opacity);
+            
+            // Update UI elements
+            document.getElementById('backgroundOpacity').value = settings.opacity * 100;
+            document.getElementById('backgroundOpacityValue').textContent = Math.round(settings.opacity * 100) + '%';
+        }
+    }
+}
+
+// Initialize managers when the page loads
 let soundManager;
+let backgroundManager;
 
 document.addEventListener('DOMContentLoaded', () => {
     soundManager = new SoundManager();
+    backgroundManager = new BackgroundManager();
 });
 
 // Handle page visibility changes to pause/resume sounds appropriately
