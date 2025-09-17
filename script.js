@@ -79,24 +79,20 @@ class SoundManager {
     }
 
     setupEventListeners() {
-        // Play/pause buttons
-        document.querySelectorAll('.play-btn').forEach(btn => {
+        // Play/pause buttons (compact)
+        document.querySelectorAll('.play-btn-compact').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const soundName = e.target.dataset.sound;
                 this.toggleSound(soundName, e.target);
             });
         });
 
-        // Volume sliders
-        document.querySelectorAll('.volume-slider').forEach(slider => {
+        // Volume sliders (compact)
+        document.querySelectorAll('.volume-slider-compact').forEach(slider => {
             slider.addEventListener('input', (e) => {
                 const soundName = e.target.dataset.sound;
                 const volume = e.target.value / 100;
                 this.setVolume(soundName, volume);
-                
-                // Update volume display
-                const volumeValue = e.target.parentElement.querySelector('.volume-value');
-                volumeValue.textContent = e.target.value + '%';
             });
         });
 
@@ -257,32 +253,24 @@ class SoundManager {
 // Background management
 class BackgroundManager {
     constructor() {
-        this.currentBackground = 'gradient';
-        this.opacity = 1;
+        this.currentBackground = 'beach';
         this.setupEventListeners();
         this.loadSavedSettings();
     }
 
     setupEventListeners() {
-        // Background selection
-        document.querySelectorAll('.background-option').forEach(option => {
+        // Background selection (compact)
+        document.querySelectorAll('.background-option-compact').forEach(option => {
             option.addEventListener('click', (e) => {
                 const backgroundType = e.currentTarget.dataset.background;
                 this.setBackground(backgroundType);
             });
         });
-
-        // Background opacity
-        const opacitySlider = document.getElementById('backgroundOpacity');
-        opacitySlider.addEventListener('input', (e) => {
-            this.setOpacity(e.target.value / 100);
-            document.getElementById('backgroundOpacityValue').textContent = e.target.value + '%';
-        });
     }
 
     setBackground(backgroundType) {
         // Remove active class from all options
-        document.querySelectorAll('.background-option').forEach(option => {
+        document.querySelectorAll('.background-option-compact').forEach(option => {
             option.classList.remove('active');
         });
 
@@ -291,31 +279,21 @@ class BackgroundManager {
 
         this.currentBackground = backgroundType;
 
-        if (backgroundType === 'gradient') {
-            // Use original gradient
-            document.body.classList.remove('has-background');
-            document.body.style.setProperty('--bg-opacity', this.opacity);
+        // Use background image
+        let imageUrl;
+        if (backgroundType === 'building') {
+            imageUrl = `assets/backgrounds/building.jpg`;
+        } else if (backgroundType === 'beach') {
+            imageUrl = `assets/backgrounds/Beach.JPG`;
         } else {
-            // Use background image
-            document.body.classList.add('has-background');
-            const imageUrl = `assets/backgrounds/${backgroundType}.jpg`;
-            document.body.style.setProperty('--background-image', `url('${imageUrl}')`);
-            this.updateBackgroundImage();
+            imageUrl = `assets/backgrounds/${backgroundType}.jpg`;
         }
-
-        this.saveSettings();
-    }
-
-    updateBackgroundImage() {
-        const beforeElement = document.body;
-        beforeElement.style.setProperty('--bg-opacity', this.opacity);
         
-        // Update the ::before pseudo-element background
+        // Update the background image directly in CSS
         const style = document.createElement('style');
         style.textContent = `
             body::before {
-                background-image: var(--background-image);
-                opacity: var(--bg-opacity);
+                background-image: url('${imageUrl}');
             }
         `;
         
@@ -327,40 +305,95 @@ class BackgroundManager {
         
         style.id = 'dynamic-bg-style';
         document.head.appendChild(style);
-    }
 
-    setOpacity(opacity) {
-        this.opacity = opacity;
-        document.body.style.setProperty('--bg-opacity', opacity);
-        
-        if (this.currentBackground !== 'gradient') {
-            this.updateBackgroundImage();
-        } else {
-            // For gradient, adjust the body opacity
-            document.body.style.opacity = opacity;
-        }
-        
         this.saveSettings();
     }
 
     saveSettings() {
         const settings = {
-            background: this.currentBackground,
-            opacity: this.opacity
+            background: this.currentBackground
         };
-        localStorage.setItem('focusZoneBackgroundSettings', JSON.stringify(settings));
+        localStorage.setItem('listenWhileYouWorkBackgroundSettings', JSON.stringify(settings));
     }
 
     loadSavedSettings() {
-        const saved = localStorage.getItem('focusZoneBackgroundSettings');
+        const saved = localStorage.getItem('listenWhileYouWorkBackgroundSettings');
         if (saved) {
             const settings = JSON.parse(saved);
             this.setBackground(settings.background);
-            this.setOpacity(settings.opacity);
-            
-            // Update UI elements
-            document.getElementById('backgroundOpacity').value = settings.opacity * 100;
-            document.getElementById('backgroundOpacityValue').textContent = Math.round(settings.opacity * 100) + '%';
+        }
+    }
+}
+
+// View Mode Manager
+class ViewModeManager {
+    constructor() {
+        this.currentMode = 'version1'; // version1, version2
+        this.modes = [
+            { name: 'version1', icon: '📋', text: 'Version 2' },
+            { name: 'version2', icon: '🎛️', text: 'Version 1' }
+        ];
+        this.setupEventListeners();
+        this.loadSavedMode();
+    }
+
+    setupEventListeners() {
+        const toggleButton = document.getElementById('viewModeToggle');
+        toggleButton.addEventListener('click', () => {
+            this.cycleMode();
+        });
+
+        // Keyboard shortcut: Press 'V' to toggle modes
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'v' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                // Only trigger if not typing in an input
+                if (document.activeElement.tagName !== 'INPUT') {
+                    this.cycleMode();
+                }
+            }
+        });
+    }
+
+    cycleMode() {
+        const currentIndex = this.modes.findIndex(mode => mode.name === this.currentMode);
+        const nextIndex = (currentIndex + 1) % this.modes.length;
+        const nextMode = this.modes[nextIndex];
+        
+        this.setMode(nextMode.name);
+    }
+
+    setMode(modeName) {
+        // Remove all mode classes
+        document.body.classList.remove('version1-mode', 'version2-mode');
+        
+        // Add new mode class
+        document.body.classList.add(`${modeName}-mode`);
+        
+        this.currentMode = modeName;
+        this.updateToggleButton();
+        this.saveMode();
+    }
+
+    updateToggleButton() {
+        const currentIndex = this.modes.findIndex(mode => mode.name === this.currentMode);
+        const nextIndex = (currentIndex + 1) % this.modes.length;
+        const nextMode = this.modes[nextIndex];
+        
+        const toggleIcon = document.querySelector('.toggle-icon');
+        const toggleText = document.querySelector('.toggle-text');
+        
+        toggleIcon.textContent = nextMode.icon;
+        toggleText.textContent = nextMode.text;
+    }
+
+    saveMode() {
+        localStorage.setItem('listenWhileYouWorkViewMode', this.currentMode);
+    }
+
+    loadSavedMode() {
+        const savedMode = localStorage.getItem('listenWhileYouWorkViewMode');
+        if (savedMode && this.modes.find(mode => mode.name === savedMode)) {
+            this.setMode(savedMode);
         }
     }
 }
@@ -368,10 +401,12 @@ class BackgroundManager {
 // Initialize managers when the page loads
 let soundManager;
 let backgroundManager;
+let viewModeManager;
 
 document.addEventListener('DOMContentLoaded', () => {
     soundManager = new SoundManager();
     backgroundManager = new BackgroundManager();
+    viewModeManager = new ViewModeManager();
 });
 
 // Handle page visibility changes to pause/resume sounds appropriately

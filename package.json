@@ -1,7 +1,7 @@
 {
-  "name": "focus-zone",
+  "name": "listen-while-you-work",
   "version": "1.0.0",
-  "description": "A simple focus website with ambient sounds and a clock to help you work productively",
+  "description": "A simple website with ambient sounds and a clock to help you work productively",
   "main": "index.html",
   "scripts": {
     "dev": "vercel dev",
@@ -16,7 +16,7 @@
     "concentration",
     "clock"
   ],
-  "author": "Focus Zone",
+  "author": "Listen While You Work",
   "license": "MIT",
   "devDependencies": {
     "vercel": "^32.0.0"

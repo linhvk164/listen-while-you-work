@@ -3,146 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Focus Zone - Listen While You Work</title>
+    <title>Listen While You Work</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Focus Zone</h1>
-            <p class="subtitle">Listen while you work</p>
+    <div class="app-container">
+        <header class="top-header">
+            <h1>Listen While You Work</h1>
+            <p class="subtitle">Create your perfect focus environment</p>
+            <button id="viewModeToggle" class="view-mode-toggle">
+                <span class="toggle-icon">🌙</span>
+                <span class="toggle-text">Minimal Mode</span>
+            </button>
         </header>
 
-        <div class="clock-container">
-            <div class="clock" id="clock">
-                <span id="time">00:00:00</span>
+        <div class="main-content">
+            <div class="clock-container">
+                <div class="clock" id="clock">
+                    <span id="time">00:00:00</span>
+                </div>
+                <div class="date" id="date">Monday, January 1, 2024</div>
             </div>
-            <div class="date" id="date">Monday, January 1, 2024</div>
-        </div>
 
-        <div class="controls-section">
-            <h2>Ambient Sounds</h2>
-            <div class="sound-controls">
-                <div class="sound-control">
-                    <div class="sound-header">
-                        <span class="sound-icon">🌧️</span>
-                        <span class="sound-name">Rain</span>
-                        <button class="play-btn" data-sound="rain">▶️</button>
-                    </div>
-                    <div class="volume-control">
-                        <input type="range" class="volume-slider" data-sound="rain" min="0" max="100" value="50">
-                        <span class="volume-value">50%</span>
+            <div class="right-controls">
+                <div class="controls-section">
+                    <h3>Ambient Sounds</h3>
+                    <div class="sound-controls-vertical">
+                        <div class="sound-control-compact">
+                            <span class="sound-icon">🌧️</span>
+                            <span class="sound-name">Rain</span>
+                            <button class="play-btn-compact" data-sound="rain">▶️</button>
+                            <input type="range" class="volume-slider-compact" data-sound="rain" min="0" max="100" value="50">
+                        </div>
+
+                        <div class="sound-control-compact">
+                            <span class="sound-icon">🌲</span>
+                            <span class="sound-name">Forest</span>
+                            <button class="play-btn-compact" data-sound="forest">▶️</button>
+                            <input type="range" class="volume-slider-compact" data-sound="forest" min="0" max="100" value="50">
+                        </div>
+
+                        <div class="sound-control-compact">
+                            <span class="sound-icon">☕</span>
+                            <span class="sound-name">Cafe</span>
+                            <button class="play-btn-compact" data-sound="cafe">▶️</button>
+                            <input type="range" class="volume-slider-compact" data-sound="cafe" min="0" max="100" value="50">
+                        </div>
+
+                        <div class="sound-control-compact">
+                            <span class="sound-icon">🌊</span>
+                            <span class="sound-name">Ocean</span>
+                            <button class="play-btn-compact" data-sound="ocean">▶️</button>
+                            <input type="range" class="volume-slider-compact" data-sound="ocean" min="0" max="100" value="50">
+                        </div>
+
+                        <div class="sound-control-compact">
+                            <span class="sound-icon">🔥</span>
+                            <span class="sound-name">Fire</span>
+                            <button class="play-btn-compact" data-sound="fireplace">▶️</button>
+                            <input type="range" class="volume-slider-compact" data-sound="fireplace" min="0" max="100" value="50">
+                        </div>
+
+                        <div class="sound-control-compact">
+                            <span class="sound-icon">🎵</span>
+                            <span class="sound-name">White</span>
+                            <button class="play-btn-compact" data-sound="whitenoise">▶️</button>
+                            <input type="range" class="volume-slider-compact" data-sound="whitenoise" min="0" max="100" value="50">
+                        </div>
                     </div>
                 </div>
 
-                <div class="sound-control">
-                    <div class="sound-header">
-                        <span class="sound-icon">🌲</span>
-                        <span class="sound-name">Forest</span>
-                        <button class="play-btn" data-sound="forest">▶️</button>
-                    </div>
-                    <div class="volume-control">
-                        <input type="range" class="volume-slider" data-sound="forest" min="0" max="100" value="50">
-                        <span class="volume-value">50%</span>
-                    </div>
-                </div>
-
-                <div class="sound-control">
-                    <div class="sound-header">
-                        <span class="sound-icon">☕</span>
-                        <span class="sound-name">Coffee Shop</span>
-                        <button class="play-btn" data-sound="cafe">▶️</button>
-                    </div>
-                    <div class="volume-control">
-                        <input type="range" class="volume-slider" data-sound="cafe" min="0" max="100" value="50">
-                        <span class="volume-value">50%</span>
+                <div class="background-section">
+                    <h3>Background</h3>
+                    <div class="background-options-vertical">
+                        <div class="background-option-compact active" data-background="beach">
+                            <div class="background-preview-compact" style="background-image: url('assets/backgrounds/Beach.JPG')"></div>
+                            <span>Beach</span>
+                        </div>
+                        <div class="background-option-compact" data-background="building">
+                            <div class="background-preview-compact" style="background-image: url('assets/backgrounds/building.jpg')"></div>
+                            <span>City</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="sound-control">
-                    <div class="sound-header">
-                        <span class="sound-icon">🌊</span>
-                        <span class="sound-name">Ocean Waves</span>
-                        <button class="play-btn" data-sound="ocean">▶️</button>
-                    </div>
-                    <div class="volume-control">
-                        <input type="range" class="volume-slider" data-sound="ocean" min="0" max="100" value="50">
-                        <span class="volume-value">50%</span>
+                <div class="master-controls">
+                    <button id="stopAll" class="stop-all-btn-compact">Stop All</button>
+                    <div class="master-volume-compact">
+                        <label for="masterVolume">Master:</label>
+                        <input type="range" id="masterVolume" min="0" max="100" value="70">
+                        <span id="masterVolumeValue">70%</span>
                     </div>
                 </div>
-
-                <div class="sound-control">
-                    <div class="sound-header">
-                        <span class="sound-icon">🔥</span>
-                        <span class="sound-name">Fireplace</span>
-                        <button class="play-btn" data-sound="fireplace">▶️</button>
-                    </div>
-                    <div class="volume-control">
-                        <input type="range" class="volume-slider" data-sound="fireplace" min="0" max="100" value="50">
-                        <span class="volume-value">50%</span>
-                    </div>
-                </div>
-
-                <div class="sound-control">
-                    <div class="sound-header">
-                        <span class="sound-icon">🎵</span>
-                        <span class="sound-name">White Noise</span>
-                        <button class="play-btn" data-sound="whitenoise">▶️</button>
-                    </div>
-                    <div class="volume-control">
-                        <input type="range" class="volume-slider" data-sound="whitenoise" min="0" max="100" value="50">
-                        <span class="volume-value">50%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="background-section">
-            <h2>Background</h2>
-            <div class="background-controls">
-                <div class="background-options">
-                    <div class="background-option active" data-background="gradient">
-                        <div class="background-preview gradient-preview"></div>
-                        <span>Gradient</span>
-                    </div>
-                    <div class="background-option" data-background="forest">
-                        <div class="background-preview" style="background-image: url('assets/backgrounds/forest.jpg')"></div>
-                        <span>Forest</span>
-                    </div>
-                    <div class="background-option" data-background="mountains">
-                        <div class="background-preview" style="background-image: url('assets/backgrounds/mountains.jpg')"></div>
-                        <span>Mountains</span>
-                    </div>
-                    <div class="background-option" data-background="ocean">
-                        <div class="background-preview" style="background-image: url('assets/backgrounds/ocean.jpg')"></div>
-                        <span>Ocean</span>
-                    </div>
-                    <div class="background-option" data-background="workspace">
-                        <div class="background-preview" style="background-image: url('assets/backgrounds/workspace.jpg')"></div>
-                        <span>Workspace</span>
-                    </div>
-                    <div class="background-option" data-background="night">
-                        <div class="background-preview" style="background-image: url('assets/backgrounds/night.jpg')"></div>
-                        <span>Night Sky</span>
-                    </div>
-                </div>
-                <div class="background-opacity">
-                    <label for="backgroundOpacity">Background Opacity:</label>
-                    <input type="range" id="backgroundOpacity" min="20" max="100" value="100">
-                    <span id="backgroundOpacityValue">100%</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="master-controls">
-            <button id="stopAll" class="stop-all-btn">Stop All Sounds</button>
-            <div class="master-volume">
-                <label for="masterVolume">Master Volume:</label>
-                <input type="range" id="masterVolume" min="0" max="100" value="70">
-                <span id="masterVolumeValue">70%</span>
             </div>
         </div>
     </div>

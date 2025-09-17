@@ -1,4 +1,4 @@
-# 🎯 Focus Zone - Listen While You Work
+# 🎧 Listen While You Work
 
 [![Live Website](https://img.shields.io/badge/Live-Website-brightgreen?style=for-the-badge)](https://listenwhileyouwork-994fu3h0g-linhs-projects-e35fe93f.vercel.app)
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
